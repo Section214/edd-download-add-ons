@@ -9,8 +9,6 @@ class EDDDA_Meta_Box {
 
 	/**
 	 * constructor for EDDDA_Meta_Box class
-	 *
-	 * @since 1.0.0
 	 */
 	public function __construct() {
 	
@@ -26,66 +24,74 @@ class EDDDA_Meta_Box {
 	 * create meta box
 	 *
 	 * @uses meta_box_output()
-	 * @since 1.0.0
 	 */
 	public function meta_box() {	
 		add_meta_box( 
 			'eddda_meta_box', 
-			__( 'Download Add-ons Configuration', 'eddda' ), 
+			'Download Add-ons ' . __( 'Configuration', 'eddda' ), 
 			array( $this, 'meta_box_output' ), 
 			'download', 
 			'side' 
 		);
 	}
-
+	
 
 	/**
-	 * meta box form output
+	 * assign download to a base download from edit download screen
 	 *
 	 * @callback_for meta_box()
-	 * @since 1.0.0
+	 * @uses retrieve_base_id()
 	 */
 	public function meta_box_output( $post ) {
-		$is_add_on = get_post_meta( $post->ID, 'is_add_on', true );
-		
-		wp_nonce_field( 'meta_box_nonce', 'eddda_meta_box_nonce' );
-		
-		// Is this download an add-on for another download?
-		echo '<input name="is_add_on" id="is_add_on" type="checkbox" value="1" ' . checked( 1, $is_add_on, false ) . '>';
-		echo '<label for="is_add_on">' . __( ' This download is an add-on for another download.', 'eddda' ) . '</label>';
-		
-		// If so, which download?
-		echo '<input style="display: none;" name="is_add_on_for" id="is_add_on_for" type="checkbox" value="1" ' . checked( 1, $is_add_on, false ) . ' >';
+		$eddda_meta = get_post_meta( $post->ID, 'base-add-on' );
+		$checked = $eddda_meta;
+		?>
+		<div class="eddda-config">
+			<div class="eddda-mb-section">
+				<label for="base-add-on">
+					<input type="checkbox" id="base-add-on" class="" name="base-add-on" value="is-base-add-on" <?php checked(); ?>>
+					<?php _e( 'Enable Base/Add-on relationship', 'eddda' ); ?>
+				</label>
+			</div>
+			
+			<div class="eddda-mb-section">
+				<span><?php _e( 'This download is a...', '' ) ?></span>
+			</div>
+			
+			<div class="eddda-mb-section">
+				<input type="radio" id="is-base" class="" name="is-base-add-on" value="base" <?php checked(); ?>>
+				<label><?php _e( 'Base', 'eddda' ) ?></label>
+			</div>
+			
+			<div class="eddda-mb-section">
+				<input type="radio" id="is-add-on" class="" name="is-base-add-on" value="add-on" <?php checked(); ?>>
+				<label><?php _e( 'Add-on', 'eddda' ) ?></label>
+			</div>
+				
+			<div class="eddda-mb-section">
+				<div class="eddda-is-base">
+					<p><?php _e( 'That\'s it! Once saved, use these same options on other downloads to assign them as an add-on to this base download.', 'eddda' ); ?></p>
+				</div>
+				<div class="eddda-is-add-on">
+					<label class="eddda-label"><?php _e( 'for the following download...', 'eddda' ) ?></label>
+					<select id="" name="">
+						<option>Select a download</option>
+						<option>This download</option>
+						<option>That download</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<?php
 	}
 
 
 	/**
 	 * save meta box settings
 	 *
-	 * @param int $post_id The ID of the post being saved
 	 * @used_by meta_box_output()
-	 * @since 1.0.0
 	 */
 	public function save_settings( $post_id ) {
-		
-		// check if nonce is set
-		if ( ! isset( $_POST['eddda_meta_box_nonce'] ) ) {
-			return $post_id;
-		}
-		$nonce = $_POST['eddda_meta_box_nonce'];
-		
-		// is nonce valid?
-		if ( ! wp_verify_nonce( $nonce, 'meta_box_nonce' ) ) {
-			return $post_id;
-		}
-		
-		// chill with the auto save stuff...
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return $post_id;
-		}
-		
-		// update the settings
-		update_post_meta( $post_id, 'is_add_on', $_POST['is_add_on'] );
 	}
 }
 new EDDDA_Meta_Box();

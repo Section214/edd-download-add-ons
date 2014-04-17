@@ -24,10 +24,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/.
  */
-
-
-// no accessing this file directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) exit; // no accessing this file directly
 
 
 /**
@@ -40,13 +37,11 @@ class EDD_Download_Addons {
 
 	/**
 	 * constructor for Simple_Course_Creator class
-	 *
-	 * @since 1.0.0
 	 */
 	public function __construct() {
 
 		// define plugin name
-		define( 'EDDDA_NAME', __( 'EDD Download Add-ons', 'eddda' ) );
+		define( 'EDDDA_NAME', 'EDD Download Add-ons' );
 
 		// define plugin version
 		define( 'EDDDA_VERSION', '1.0.0' );
@@ -70,8 +65,6 @@ class EDD_Download_Addons {
 
 	/**
 	 * load EDD Download Add-ons textdomain
-	 *
-	 * @since 1.0.0
 	 */
 	public function load_textdomain() {
 		load_plugin_textdomain( 'eddda', false, EDDDA_DIR . "languages" );
@@ -80,23 +73,22 @@ class EDD_Download_Addons {
 
 	/** 
 	 * enqueue back-end scripts and styles
-	 *
-	 * @since 1.0.0
 	 */
 	public function admin_assets() {
 
+		// edit download page CSS
+		wp_enqueue_style( 'eddda_admin_style', EDDDA_URL . 'assets/css/admin-styles.css' );
+
 		// edit download page JS
-		wp_enqueue_script( 'scc_admin_style', EDDDA_URL . 'assets/js/admin-scripts.js' );
+		wp_enqueue_script( 'eddda_admin_scripts', EDDDA_URL . 'assets/js/admin-scripts.js' );
 	}
 
 
 	/**
 	 * require additional plugin files
-	 *
-	 * @since 1.0.0
 	 */
 	private function includes() {
-		require_once( EDDDA_DIR . 'includes/admin/class-eddda-meta-box.php' );		// build EDDDA meta box
+		require_once( EDDDA_DIR . 'includes/admin/class-eddda-meta-box.php' ); // build EDDDA meta box
 	}
 }
 new EDD_Download_Addons();
