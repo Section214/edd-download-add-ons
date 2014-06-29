@@ -80,7 +80,7 @@ class EDD_Download_Addons {
 		wp_enqueue_style( 'eddda_admin_style', EDDDA_URL . 'assets/css/admin-styles.css' );
 
 		// edit download page JS
-		wp_enqueue_script( 'eddda_admin_scripts', EDDDA_URL . 'assets/js/admin-scripts.js' );
+		//wp_enqueue_script( 'eddda_admin_scripts', EDDDA_URL . 'assets/js/admin-scripts.js' );
 	}
 
 
