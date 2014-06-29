@@ -49,7 +49,7 @@ class EDDDA_Meta_Box {
 		<div class="eddda-config">
 			<div class="eddda-mb-section">
 				<label for="base-add-on">
-					<input type="checkbox" id="base-add-on" class="" name="base-add-on" value="is-base-add-on" <?php checked(); ?>>
+					<input type="checkbox" id="base-add-on" class="" name="base-add-on" value="is-base-add-on" <?php checked( true ); ?>>
 					<?php _e( 'Enable Base/Add-on relationship', 'eddda' ); ?>
 				</label>
 			</div>
@@ -59,12 +59,12 @@ class EDDDA_Meta_Box {
 			</div>
 			
 			<div class="eddda-mb-section">
-				<input type="radio" id="is-base" class="" name="is-base-add-on" value="base" <?php checked(); ?>>
+				<input type="radio" id="is-base" class="" name="is-base-add-on" value="base" <?php checked( true ); ?>>
 				<label><?php _e( 'Base', 'eddda' ) ?></label>
 			</div>
 			
 			<div class="eddda-mb-section">
-				<input type="radio" id="is-add-on" class="" name="is-base-add-on" value="add-on" <?php checked(); ?>>
+				<input type="radio" id="is-add-on" class="" name="is-base-add-on" value="add-on" <?php checked( true ); ?>>
 				<label><?php _e( 'Add-on', 'eddda' ) ?></label>
 			</div>
 				
